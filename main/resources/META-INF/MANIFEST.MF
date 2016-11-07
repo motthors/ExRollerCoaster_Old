@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+FMLCorePlugin: erc.rewriteClass.loadingPlugin
+FMLCorePluginContainsFMLMod: erc._core.ERC_Core

@@ -1,0 +1,17 @@
+tile.railNormal.name=Normal Rail
+tile.railRedAccel.name=RedStone Powered Rail
+tile.railConstVelocity.name=ConstVelocity Rail
+tile.railDetector.name=Detector Rail
+tile.railBranch.name=Branch Rail
+tile.railInvisible.name=Invisible Rail
+
+item.RailPipe.name=Rail Pipe
+item.Wrench.name=Wrench
+item.BlockPlacer.name=Magical PlaceBlockInTheAir Stick!
+
+item.Coaster.name=Coaster
+item.CoasterConnector.name=Connector Coaster
+item.CoasterMono.name=Single Seat Coaster
+
+item.SwitchRailModel.name=Switch Rail Model
+item.ERCSUSHI.name=SUSHI
