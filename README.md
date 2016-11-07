@@ -1,5 +1,5 @@
 # ExRollerCoaster
-![Minecraft version 1.7.10](https://img.shields.io/badge/mc%20version-1.7-brightgreen.svg)
+![Minecraft version 1.7.10](https://img.shields.io/badge/mc%20version-1.7.10-brightgreen.svg)
 
 ##Link リンク
 
