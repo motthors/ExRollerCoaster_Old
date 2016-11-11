@@ -332,12 +332,21 @@ public class ERC_Core {
 				'P',ItemBasePipe,
 				'I',Items.iron_ingot
 		);
-		// ステッキ
+		// 空中ブロックステッキ
 		GameRegistry.addRecipe(new ItemStack(ItemStick,1,0),
 				"D  ",
 				" P ",
 				"  I",
 				'D',Blocks.dirt,
+				'P',ItemBasePipe,
+				'I',Items.stick
+		);
+		// Smoothステッキ
+		GameRegistry.addRecipe(new ItemStack(ItemSmoothAll,1,0),
+				"B  ",
+				" P ",
+				"  I",
+				'B',Items.book,
 				'P',ItemBasePipe,
 				'I',Items.stick
 		);

@@ -47,7 +47,6 @@ public class ERC_ItemWrench extends Item {
 	{
 		if(player.isSneaking())
 		{
-			player.motionY = 1;
 			if(world.isRemote) 
 			{	//client
 				// モード変更はクラで

@@ -8,6 +8,7 @@ tile.railInvisible.name=Invisible Rail
 item.RailPipe.name=Rail Pipe
 item.Wrench.name=Wrench
 item.BlockPlacer.name=Magical PlaceBlockInTheAir Stick!
+item.ERCSmoothAll.name=Magical AllRailSmoother Stick!
 
 item.Coaster.name=Coaster
 item.CoasterConnector.name=Connector Coaster
