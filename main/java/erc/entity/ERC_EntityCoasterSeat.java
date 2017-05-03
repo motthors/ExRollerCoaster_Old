@@ -449,7 +449,7 @@ public class ERC_EntityCoasterSeat extends Wrap_EntityCoaster{
             this.riddenByEntity.motionX = this.parent.Speed * parent.ERCPosMat.Dir.xCoord * 1;
             this.riddenByEntity.motionY = this.parent.Speed * parent.ERCPosMat.Dir.yCoord * 1;
             this.riddenByEntity.motionZ = this.parent.Speed * parent.ERCPosMat.Dir.zCoord * 1;
-            ERC_Logger.info("" + riddenByEntity.motionX + riddenByEntity.motionY + riddenByEntity.motionZ );
+//            ERC_Logger.info("" + riddenByEntity.motionX + riddenByEntity.motionY + riddenByEntity.motionZ );
 			
             if(worldObj.isRemote && riddenByEntity instanceof EntityLivingBase)
             {

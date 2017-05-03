@@ -122,10 +122,10 @@ public class classTransformer implements IClassTransformer {
 			boolean flag = false;
 			flag |= TARGET_TRANSFORMED_NAME.equals(mapMethodName(TARGET_CLASS_NAME, name, desc));
 			flag |= TARGET_Original_NAME.equals(mapMethodName(TARGET_CLASS_NAME, name, desc));
-			if(flag && TARGET_DESC.equals(desc))
-			{
-				return new MethodAdapter_GetOff(super.visitMethod(access, name, desc, signature, exceptions));
-			}
+//			if(flag && TARGET_DESC.equals(desc))
+//			{
+//				return new MethodAdapter_GetOff(super.visitMethod(access, name, desc, signature, exceptions));
+//			}
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
 	}

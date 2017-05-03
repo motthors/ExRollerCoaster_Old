@@ -7,6 +7,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import erc._core.ERC_Logger;
 import erc.entity.ERC_EntityCoasterSeat;
 import erc.sound.ERCMovingSound;
 import erc.sound.ERCMovingSoundRiding;
@@ -106,6 +107,7 @@ public class ERC_RenderEventHandler {
 	    	mc.getSoundHandler().playSound(new ERCMovingSoundRiding(player, (ERC_EntityCoasterSeat)player.ridingEntity));
 	    	mc.getSoundHandler().playSound(new ERCMovingSound(player, (ERC_EntityCoasterSeat)player.ridingEntity));
 	    	player.getEntityData().setBoolean(key, true);
+	    	ERC_Logger.debugInfo("sound update");
 	    }
 	}
 }
