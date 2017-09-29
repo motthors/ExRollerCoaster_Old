@@ -1,2 +1,14 @@
 models/
 textures/
+.gradle/
+.settings/
+bin/
+blender_project/
+modelsafe/
+.idea
+eclipse
+gradle
+build
+gradlew*
+MinecraftForge*
+*fml*
