@@ -11,12 +11,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import erc.block.blockRailBranch;
-import erc.block.blockRailConstVelocity;
-import erc.block.blockRailDetector;
-import erc.block.blockRailInvisible;
-import erc.block.blockRailNormal;
-import erc.block.blockRailRedstoneAccelerator;
+import erc.block.*;
 import erc.entity.ERC_EntityCoaster;
 import erc.entity.ERC_EntityCoasterConnector;
 import erc.entity.ERC_EntityCoasterDoubleSeat;
@@ -35,13 +30,7 @@ import erc.item.ERC_ItemWrenchPlaceBlock;
 import erc.item.itemSUSHI;
 import erc.message.ERC_PacketHandler;
 import erc.proxy.IProxy;
-import erc.tileEntity.TileEntityRailBase;
-import erc.tileEntity.TileEntityRailBranch2;
-import erc.tileEntity.TileEntityRailConstVelosity;
-import erc.tileEntity.TileEntityRailDetector;
-import erc.tileEntity.TileEntityRailInvisible;
-import erc.tileEntity.TileEntityRailNormal;
-import erc.tileEntity.TileEntityRailRedstoneAccelerator;
+import erc.tileEntity.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -64,20 +53,20 @@ public class ERC_Core {
 	@SidedProxy(clientSide = "erc.proxy.ERC_ClientProxy", serverSide = "erc.proxy.ERC_ServerProxy")
 	public static IProxy proxy;
 	
-	//レールブロック/////////////////////////////////////////
+	//Blocks/////////////////////////////////////////
 	public static Block railNormal = new blockRailNormal();
 	public static Block railRedAccel = new blockRailRedstoneAccelerator();
 	public static Block railConst = new blockRailConstVelocity();
 	public static Block railDetect = new blockRailDetector();
 	public static Block railBranch = new blockRailBranch();
 	public static Block railInvisible = new blockRailInvisible();
+	public static Block railNonGravity = new BlockNonGravityRail();
 	
-	
-	//特殊ブロックレンダラID
+	//special block renderer ID
 	public static int blockRailRenderId;
 //	public static int blockFerrisSupporterRenderID;
 	
-	//コースターアイテム/////////////////////////////////////////
+	// items /////////////////////////////////////////
 	public static Item ItemBasePipe = new Item();
 	public static Item ItemWrench = new ERC_ItemWrench();
 	public static Item ItemCoaster = new ERC_ItemCoaster();
@@ -98,11 +87,11 @@ public class ERC_Core {
 //    public static final int GUIID_FerrisCore = 3;
     
 	////////////////////////////////////////////////////////////////
-	// 独自クリエイティブタブ作成
-	public static ERC_CreateCreativeTab ERC_Tab = new ERC_CreateCreativeTab("ExRC", ItemCoaster);
+	//Creative Tab
+	public static ERC_CreateCreativeTab ERC_Tab = new ERC_CreateCreativeTab("ExRC", ItemBasePipe);
 	
 	////////////////////////////////////////////////////////////////
-	// TickEventプロキシ
+	// TickEventProxy
 	public static ERC_TickEventHandler tickEventHandler = null;
 	
 	////////////////////////////////////////////////////////////////
@@ -115,7 +104,7 @@ public class ERC_Core {
 		blockRailRenderId = proxy.getNewRenderType();
 		ERC_PacketHandler.init();
 		
-		// TileEntity登録
+		// Register TileEntity
 		GameRegistry.registerTileEntity(TileEntityRailBase.class, "ERC:TileEntityRailBase");
 		GameRegistry.registerTileEntity(TileEntityRailNormal.class, "ERC:TileEntityRail");
 		GameRegistry.registerTileEntity(TileEntityRailRedstoneAccelerator.class, "ERC:TileEntityRailRedAcc");
@@ -123,13 +112,10 @@ public class ERC_Core {
 		GameRegistry.registerTileEntity(TileEntityRailDetector.class, "ERC:TileEntityRailDetector");
 		GameRegistry.registerTileEntity(TileEntityRailBranch2.class, "ERC:TileEntityRailBranch");
 		GameRegistry.registerTileEntity(TileEntityRailInvisible.class, "ERC:TileEntityInvisible");
-		
+		GameRegistry.registerTileEntity(TileEntityNonGravityRail.class, "ERC:TileEntityNonGravity");
+
 		proxy.preInit();
 
-		new File("./MFWFiles/WheelFrame/").mkdirs();
-		new File("./MFWFiles/Basket/").mkdirs();
-		;
-		
 		ERC_Logger.info("End preInit");
 	}
 
@@ -141,7 +127,7 @@ public class ERC_Core {
 
 		proxy.init();
 		
-		//エンティティの登録。
+		//Register Entity
 		int eid=100;
 		EntityRegistry.registerModEntity(ERC_EntityCoaster.class, "erc:coaster", eid++, this, 200, 10, true);
 		EntityRegistry.registerModEntity(ERC_EntityCoasterMonodentate.class, "erc:coaster:mono", eid++, this, 200, 10, true);
@@ -150,11 +136,11 @@ public class ERC_Core {
 		EntityRegistry.registerModEntity(ERC_EntityCoasterConnector.class, "erc:coaster:connect", eid++, this, 200, 10, true);
 		EntityRegistry.registerModEntity(entitySUSHI.class, "erc:SUSHI", eid++, this, 200, 50, true);
 
-		// アイテムの登録
+		//Register Items
 		InitBlock_RC();
 		InitItem_RC();
 		
-		// レシピの登録
+		// Register Recipe
 		InitItemRecipe();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new ERC_GUIHandler());
@@ -206,6 +192,12 @@ public class ERC_Core {
 			.setBlockTextureName("glass")
 			.setCreativeTab(ERC_Tab);
 		GameRegistry.registerBlock(railInvisible, "ERC.RailInvisible");
+
+		railNonGravity
+            .setBlockName("railNonGravity")
+            .setBlockTextureName("portal")
+            .setCreativeTab(ERC_Tab);
+		GameRegistry.registerBlock(railNonGravity, "ERC.RailNonGravity");
 	}
 	
 	private void InitItem_RC()
@@ -216,8 +208,8 @@ public class ERC_Core {
 		GameRegistry.registerItem(ItemBasePipe, "railpipe");
 		
 		ItemWrench.setCreativeTab(ERC_Tab);
-		ItemWrench.setUnlocalizedName("Wrench");/*システム名の登録*/
-		ItemWrench.setTextureName(MODID+":wrench_c1");/*テクスチャの指定*/
+		ItemWrench.setUnlocalizedName("Wrench");
+		ItemWrench.setTextureName(MODID+":wrench_c1");
 		ItemWrench.setMaxStackSize(1);
 		GameRegistry.registerItem(ItemWrench, "Wrench");
 		
@@ -232,13 +224,13 @@ public class ERC_Core {
 		ItemCoaster.setTextureName(MODID+":coaster");
 		ItemCoaster.setMaxStackSize(10);
 		GameRegistry.registerItem(ItemCoaster, "Coaster");
-		
+
 		ItemCoasterConnector.setCreativeTab(ERC_Tab);
 		ItemCoasterConnector.setUnlocalizedName("CoasterConnector");
 		ItemCoasterConnector.setTextureName(MODID+":coaster_c");
 		ItemCoasterConnector.setMaxStackSize(10);
 		GameRegistry.registerItem(ItemCoasterConnector, "CoasterConnector");
-	
+
 		ItemCoasterMono.setCreativeTab(ERC_Tab);
 		ItemCoasterMono.setUnlocalizedName("CoasterMono");
 		ItemCoasterMono.setTextureName(MODID+":coaster");
@@ -266,7 +258,7 @@ public class ERC_Core {
 	
 	private void InitItemRecipe()
 	{
-		// ベースのレールパイプの作成
+
 		GameRegistry.addRecipe(new ItemStack(ItemBasePipe,2,0),
                 " L ",
                 "L L",
@@ -274,13 +266,13 @@ public class ERC_Core {
                 'L',Items.iron_ingot
         );
 		
-		// レールパイプを鉄に戻す
+		
 		GameRegistry.addRecipe(new ItemStack(Items.iron_ingot,2,0),
                 "L",
                 'L',ItemBasePipe
         );
 				
-		// レールパイプからレール作成
+		
 		GameRegistry.addRecipe(new ItemStack(railNormal,10,0),
 				"P P",
 				"PBP",
@@ -324,7 +316,7 @@ public class ERC_Core {
 				'G',Blocks.glass
 		);
 		
-		// レンチ
+
 		GameRegistry.addRecipe(new ItemStack(ItemWrench,1,0),
 				"PI ",
 				"II ",
@@ -332,7 +324,7 @@ public class ERC_Core {
 				'P',ItemBasePipe,
 				'I',Items.iron_ingot
 		);
-		// 空中ブロックステッキ
+		
 		GameRegistry.addRecipe(new ItemStack(ItemStick,1,0),
 				"D  ",
 				" P ",
@@ -341,7 +333,7 @@ public class ERC_Core {
 				'P',ItemBasePipe,
 				'I',Items.stick
 		);
-		// Smoothステッキ
+		
 		GameRegistry.addRecipe(new ItemStack(ItemSmoothAll,1,0),
 				"B  ",
 				" P ",
@@ -357,28 +349,28 @@ public class ERC_Core {
 				'F',Items.fish,
 				'M',Items.wheat
 		);
-		// コースター
+		
 		GameRegistry.addRecipe(new ItemStack(ItemCoaster,1,0),
 				"I I",
 				"PIP",
 				'P',ItemBasePipe,
 				'I',Items.iron_ingot
 		);
-		// 単座コースター
+		
 		GameRegistry.addRecipe(new ItemStack(ItemCoasterMono,1,0),
 				"C",
 				"R",
 				'C',ItemCoaster,
 				'R',Items.redstone
 		);
-		// 連結コースター
+		
 		GameRegistry.addRecipe(new ItemStack(ItemCoasterConnector,1,0),
 				"FC",
 				'F',Blocks.tripwire_hook,
 				'C',ItemCoaster
 		);
 		
-		// レールモデル変更アイテム
+		
 		GameRegistry.addRecipe(new ItemStack(ItemSwitchRail,1,0),
 				" L ",
                 "LRL",
@@ -387,7 +379,7 @@ public class ERC_Core {
 				'L',ItemBasePipe
 		);
 		
-		// バニラのレールからレールを作るアレ
+		
 		GameRegistry.addRecipe(new ItemStack(railNormal,10,0),
 				"R R",
                 "R R",

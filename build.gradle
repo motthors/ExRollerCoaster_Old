@@ -17,13 +17,19 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.4.1"
-group= "mochisystems.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "1.5.1"
+group= "mochisystems.mod.erc" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ExRollerCoaster"
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "eclipse"
+}
+
+sourceSets.main {
+    java.srcDirs project.projectDir.name
+    resources.srcDirs project.projectDir.name
+    output.resourcesDir output.classesDir
 }
 
 dependencies {
@@ -61,3 +67,5 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+tasks.withType(Jar) {compileJava.options.encoding = 'UTF-8'}

@@ -37,6 +37,7 @@ public class ERC_ItemSmoothAll extends Item {
 		if(num>=100)return;
 		if(num<=-100)return;
 		if(num != 0 && root == rail)return;
+		if(rail == null)return;
 		
 		rail.Smoothing();
 		rail.CalcRailLength();

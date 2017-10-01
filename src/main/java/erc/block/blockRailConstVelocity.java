@@ -17,7 +17,6 @@ public class blockRailConstVelocity extends blockRailBase{
 	}
 	
 	
-	// ÔÎ“ü—Í§Œä
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
         if (!world.isRemote)
@@ -34,7 +33,7 @@ public class blockRailConstVelocity extends blockRailBase{
             		rail.changeToggleFlag();
             		rail.turnOnFlag();
                 	ERC_PacketHandler.INSTANCE.sendToAll(new ERC_MessageRailMiscStC(rail));
-                	world.playAuxSFXAtEntity((EntityPlayer)null, 1003, x, y, z, 0); //Œø‰Ê‰¹H
+                	world.playAuxSFXAtEntity((EntityPlayer)null, 1003, x, y, z, 0); //ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½H
                 }
             	else if(!flag && tgle)
                 {

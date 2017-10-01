@@ -12,3 +12,14 @@ build
 gradlew*
 MinecraftForge*
 *fml*
+
+
+# minecraft
+
+saves
+resourcepacks
+mods
+config
+crash-reports
+logs
+screenshots

@@ -22,12 +22,7 @@ import erc.renderer.ERC_RenderTileEntityRailBase;
 import erc.renderer.renderBlockRail;
 import erc.renderer.renderEntityCoasterSeat;
 import erc.renderer.renderEntitySUSIHI;
-import erc.tileEntity.TileEntityRailBranch2;
-import erc.tileEntity.TileEntityRailConstVelosity;
-import erc.tileEntity.TileEntityRailDetector;
-import erc.tileEntity.TileEntityRailInvisible;
-import erc.tileEntity.TileEntityRailNormal;
-import erc.tileEntity.TileEntityRailRedstoneAccelerator;
+import erc.tileEntity.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -45,7 +40,7 @@ public class ERC_ClientProxy implements IProxy{
 	{
 //		FMLClientHandler.instance().addModAsResource( (new customResourceLoader() ).get());
 		
-		// ƒfƒtƒHƒR[ƒXƒ^[“o˜^
+		// ï¿½fï¿½tï¿½Hï¿½Rï¿½[ï¿½Xï¿½^ï¿½[ï¿½oï¿½^
 		String defaultModel = ERC_CONST.DOMAIN+":models/coaster.obj";
 		String defaultModel_c = ERC_CONST.DOMAIN+":models/coaster_connect.obj";
 		String defaultTex = ERC_CONST.DOMAIN+":textures/gui/gui.png";
@@ -78,7 +73,7 @@ public class ERC_ClientProxy implements IProxy{
 		ERC_ModelLoadManager.registerCoaster(inv);
 		ERC_ModelLoadManager.registerConnectionCoaster(inv);
 		
-		///// •¡À
+		///// ï¿½ï¿½ï¿½ï¿½
 		ERC_ModelLoadPlan head = new ERC_ModelLoadPlan("erc:models/coaster_d.obj", defaultTex, "erc:coaster_d");
 		ERC_ModelLoadPlan sub = new ERC_ModelLoadPlan("erc:models/coaster_d_c.obj", defaultTex, "erc:coaster_dc");
 		head.setSeatNum(2);
@@ -98,16 +93,17 @@ public class ERC_ClientProxy implements IProxy{
 		ERC_ModelLoadManager.registerConnectionCoaster(sub);
 		
 
-		// TileEntityRender‚Ì“o˜^
-		ERC_RenderTileEntityRailBase tilerenderer = new ERC_RenderTileEntityRailBase();
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailNormal.class, tilerenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailRedstoneAccelerator.class, tilerenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailConstVelosity.class, tilerenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailDetector.class, tilerenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailBranch2.class,tilerenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailInvisible.class, tilerenderer);
+		// TileEntityRenderï¿½Ì“oï¿½^
+		ERC_RenderTileEntityRailBase tileRenderer = new ERC_RenderTileEntityRailBase();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailNormal.class, tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailRedstoneAccelerator.class, tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailConstVelosity.class, tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailDetector.class, tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailBranch2.class,tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailInvisible.class, tileRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNonGravityRail.class, tileRenderer);
 
-		// Entity•`‰æ“o˜^
+		// Entityï¿½`ï¿½ï¿½oï¿½^
 		ERC_RenderEntityCoaster renderer = new ERC_RenderEntityCoaster();
 		RenderingRegistry.registerEntityRenderingHandler(ERC_EntityCoaster.class, renderer);
 		RenderingRegistry.registerEntityRenderingHandler(ERC_EntityCoasterMonodentate.class, renderer);
@@ -117,10 +113,10 @@ public class ERC_ClientProxy implements IProxy{
 		
 		RenderingRegistry.registerEntityRenderingHandler(entitySUSHI.class, new renderEntitySUSIHI());
 		
-		// ƒuƒƒbƒNƒJƒXƒ^ƒ€ƒŒƒ“ƒ_[‚Ì“o˜^
+		// ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½Jï¿½Xï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½Ì“oï¿½^
 		RenderingRegistry.registerBlockHandler(new renderBlockRail());
 		
-		// Handler‚Ì“o˜^
+		// Handlerï¿½Ì“oï¿½^
 		Minecraft mc = Minecraft.getMinecraft();
 		ERC_Core.tickEventHandler = new ERC_ClientTickEventHandler(mc);
 		FMLCommonHandler.instance().bus().register(new ERC_TickEventHandler());
@@ -128,7 +124,7 @@ public class ERC_ClientProxy implements IProxy{
 		MinecraftForge.EVENT_BUS.register(new ERC_InputEventHandler(mc));
 		MinecraftForge.EVENT_BUS.register(new ERC_RenderEventHandler());
 		
-		// ƒXƒV‚Ìƒ‚ƒfƒ‹‚Æ‚©
+		// ï¿½Xï¿½Vï¿½Ìƒï¿½ï¿½fï¿½ï¿½ï¿½Æ‚ï¿½
 		entitySUSHI.clientInitSUSHI();
 	}
 
@@ -141,7 +137,7 @@ public class ERC_ClientProxy implements IProxy{
 	@Override
 	public void postInit() 
 	{
-		// ‰Šú®’Ç‰Áƒ‚ƒfƒ‹‚Ìƒ[ƒh
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìƒï¿½ï¿½[ï¿½h
 		ERC_ModelLoadManager.init();
 	}
 }

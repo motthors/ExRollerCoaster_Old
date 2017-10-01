@@ -2,6 +2,7 @@ package erc.entity;
 
 import java.util.Random;
 
+import erc._core.ERC_Logger;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -41,12 +42,17 @@ public class entitySUSHI extends Entity {
 	@SideOnly(Side.CLIENT)
 	public static void clientInitSUSHI()
 	{
-		tex = new ResourceLocation(ERC_CONST.DOMAIN,"textures/entities/SUSHI.png");
-		model1 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN,"models/SUSHI/"+"SUSHI_m.obj"));
-		model2 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN,"models/SUSHI/"+"SUSHI_t.obj"));
-		model3 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN,"models/SUSHI/"+"SUSHI_w.obj"));
-		model4 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN,"models/SUSHI/"+"SUSHI_e.obj"));
-		model5 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN,"models/SUSHI/"+"SUSHI_g.obj"));
+		tex = new ResourceLocation(ERC_CONST.DOMAIN,"textures/entities/SUSHI.jpg");
+		try {
+			model1 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN, "models/SUSHI/" + "SUSHI_m.obj"));
+			model2 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN, "models/SUSHI/" + "SUSHI_t.obj"));
+			model3 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN, "models/SUSHI/" + "SUSHI_w.obj"));
+			model4 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN, "models/SUSHI/" + "SUSHI_e.obj"));
+			model5 = AdvancedModelLoader.loadModel(new ResourceLocation(ERC_CONST.DOMAIN, "models/SUSHI/" + "SUSHI_g.obj"));
+		}
+		catch(Exception e){
+			ERC_Logger.warn("Loading SUSHI model is failure");
+		}
 		models = new IModelCustom[5];
 		models[0] = model2;
 		models[1] = model3;
@@ -146,7 +152,7 @@ public class entitySUSHI extends Entity {
 
 		GL11.glScalef(1.2f, 1.2f, 1.2f);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(tex);
-		models[getId()].renderAll();
+		if(models[getId()]!=null)models[getId()].renderAll();
 		GL11.glPopMatrix();
 	}
 	

@@ -74,14 +74,14 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 	// return true to prevent any further processing.
     protected boolean requestConnectCoaster(EntityPlayer player)
     {
-    	// ˜AŒ‹ƒR[ƒXƒ^[‚ğƒvƒŒƒCƒ„[‚ª‚Á‚Ä‚È‚©‚Á‚½‚ç‚¾‚ß
+    	// cancel if player dont has a connective coaster
     	if(player.getCurrentEquippedItem() == null ) return false;
 		if( !(player.getCurrentEquippedItem().getItem() instanceof ERC_ItemCoasterConnector) ) return false;
 		
-		//ƒNƒŠƒbƒN‚µ‚½ƒR[ƒXƒ^[‚ª˜AŒ‹‹–‰Â‚³‚ê‚Ä‚é‚Ì‚¶‚á‚È‚¢‚Æ‚¾‚ß@‚½‚¾‚µeƒR[ƒXƒ^[‚ª˜AŒ‹‹–‰Â‚µ‚Ä‚ ‚ê‚Î‚»‚Á‚¿‚Å‚â‚é
+		//proxy connection to parent
 		if( !canConnectForrowingCoaster() )
 		{
-			//e‚ª‚¢‚¢‚È‚ç‚æ‚µ
+			//
 			if(parent.canConnectForrowingCoaster())
 			{
 				parent.AnswerRequestConnect(player);
@@ -90,7 +90,6 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 			return false;
 		}
 		
-		// ˆÈ‰º‹–‰Â‚µA‘¼‚Ì‰EƒNƒŠƒbƒN“®ì‚Í‚³‚¹‚È‚¢
 		AnswerRequestConnect(player);
 		return true;
     }
@@ -113,7 +112,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 	@Override
 	public void killCoaster(boolean dropflag)
 	{
-		// if(worldObj.isRemote) return; //ƒNƒ‰‚ÍŸè‚ÉKill‚µ‚È‚¢
+		// if(worldObj.isRemote) return;
 		super.killCoaster(dropflag);
 		// if(next!=null)next.killCoaster(dropflag);
 		if (parent != null)
@@ -131,14 +130,13 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 
 		savePrevData();
 
-		updateParamT(); // ”}‰î•Ï”‚ÌXV
-		// Œ»ƒŒ[ƒ‹‚ğ’´‚¦‚½‚çŸ‚Ìİ’è
+		updateParamT();
+
 		if (AdjustParamT())
 			return;
 
 		// AdjustParamT();
 
-		// ƒV[ƒg‚ÌÀ•Wİ’è
 		// if(seats!=null)for(int i=0; i<seats.length; ++i)seats[i].onUpdate();
 
 		// if(seats!=null)for(int i=0; i<seats.length;
@@ -146,7 +144,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 		updateSpeedAndRot();
 		
 		
-		// ‚S
+		// 4
         if(seats!=null)
 		{
     		for(int i=0; i<seats.length; ++i)if(seats[i]!=null)
@@ -157,7 +155,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 //    		if(worldObj.isRemote)ERC_Logger.debugInfo("end coaster onUpdate");
 		}
         
-        // ‚T
+        // 5
     	updateFlag = !updateFlag;
 	}
 
@@ -174,7 +172,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 					ERC_PacketHandler.INSTANCE.sendToAll(packet);
 				}
 			} else {
-				// ƒNƒ‰‚Í‚½‚Ü‚ÉƒT[ƒo[‚Æ˜AŒ‹ŠÖŒW‚Ì“¯Šú‚ğ‚İ‚é
+				// ã‚¯ãƒ©ã¯ãŸã¾ã«ã‚µãƒ¼ãƒãƒ¼ã¨é€£çµé–¢ä¿‚ã®åŒæœŸã‚’è©¦ã¿ã‚‹
 				if (parent == null) {
 					ERC_MessageRequestConnectCtS packet = new ERC_MessageRequestConnectCtS(
 							Minecraft.getMinecraft().thePlayer.getEntityId(), this.getEntityId());
@@ -188,7 +186,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 	@Override
 	protected boolean updateInit() {
 		if (parent == null) {
-			if (!worldObj.isRemote) { // I‚Íe‚ğ’T‚·
+			if (!worldObj.isRemote) { // é¯–ã¯è¦ªã‚’æ¢ã™
 				ERC_ManagerCoasterLoad.searchParent(this.getEntityId(), connectIndex, parentuuid);
 			}
 			return true;
@@ -243,7 +241,7 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 		//
 		// tlrail.SpecialRailProcessing(this);
 		//
-		// // t‚ğŒ³‚ÉÀ•WXV
+		// // update position by 't'
 		// this.setPosition(ERCPosMat.Pos.xCoord, ERCPosMat.Pos.yCoord,
 		// ERCPosMat.Pos.zCoord);
 	}
@@ -270,11 +268,11 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 
 	public void SyncCoasterMisc_Send(ByteBuf buf, int flag) {
 		switch (flag) {
-		// case 1 : //killcoaster super‚Åİ’è
+		// case 1 : //killcoaster superï¿½Åİ’ï¿½
 		case 2: // connect coaster to child
-			// e‚Æ©•ª‚ÌID‘—M
-			buf.writeInt((parent == null) ? -1 : parent.getEntityId()); // e‚æ‚èæ‚Éq‚ªƒ[ƒh‚³‚ê‚½ê‡ƒNƒ‰‚©‚ç“¯Šú—v¿‚ª—ˆ‚½‚Æ‚«‚Ée‚ª–³‚¢‚±‚Æ‚ª‚ ‚é
-																		// -1‚ğ‘—‚Á‚ÄŒ©‘—‚è
+			// è¦ªã¨è‡ªåˆ†ã®IDé€ä¿¡
+			buf.writeInt((parent == null) ? -1 : parent.getEntityId()); // è¦ªã‚ˆã‚Šå…ˆã«å­ãŒãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸå ´åˆã‚¯ãƒ©ã‹ã‚‰åŒæœŸè¦è«‹ãŒæ¥ãŸã¨ãã«è¦ªãŒç„¡ã„ã“ã¨ãŒã‚ã‚‹
+																		// -1ã‚’é€ã£ã¦è¦‹é€ã‚Š
 			buf.writeInt(connectIndex);
 			buf.writeFloat(distanceToParent);
 			return;
@@ -286,16 +284,16 @@ public class ERC_EntityCoasterConnector extends ERC_EntityCoaster {
 		switch (flag) {
 		case 2: // connect coaster to parent
 			if (parent != null)
-				return; // e‚ª‚à‚¤‚í‚©‚Á‚Ä‚é‚È‚ç‚â‚ç‚È‚­‚Ä‚¢‚¢
+				return; // è¦ªãŒã‚‚ã†ã‚ã‹ã£ã¦ã‚‹ãªã‚‰ã‚„ã‚‰ãªãã¦ã„ã„
 			int parentid = buf.readInt();
 			if (parentid == -1)
-				return; // I‚ÌƒR[ƒXƒ^[‚àe‚ğŒ©‚Â‚¯‚ç‚ê‚Ä‚È‚¢‚©‚ç“¯Šú’†~
+				return; // é¯–ã®ã‚³ãƒ¼ã‚¹ã‚¿ãƒ¼ã‚‚è¦ªã‚’è¦‹ã¤ã‘ã‚‰ã‚Œã¦ãªã„ã‹ã‚‰åŒæœŸä¸­æ­¢
 			int idx = buf.readInt();
 			this.connectIndex = idx;
 			this.distanceToParent = buf.readFloat();
 			ERC_EntityCoaster parent = (ERC_EntityCoaster) worldObj.getEntityByID(parentid);
 			if (parent == null)
-				return;// e‚ª‚Ü‚¾ƒ[ƒh‚³‚ê‚Ä‚È‚¢‚Æ‚È‚éH(‚»‚ñ‚È‚Î‚©‚È)
+				return;// è¦ªãŒã¾ã ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ãªã„ã¨ãªã‚‹ï¼Ÿ(ãã‚“ãªã°ã‹ãª)
 
 			parent.connectionCoaster(this);
 			return;

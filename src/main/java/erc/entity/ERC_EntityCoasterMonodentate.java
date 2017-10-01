@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
 /*
- * �P���̃N���C�A���g���ʒu�����R�[�X�^�[
+ * 単座のクライアント側位置処理コースター
  */
 public class ERC_EntityCoasterMonodentate extends ERC_EntityCoaster{
 
@@ -37,7 +37,7 @@ public class ERC_EntityCoasterMonodentate extends ERC_EntityCoaster{
 	@Override
 	public void setParamFromPacket(float t, double speed, int x, int y, int z)
     {
-    	 // ����Ă���̂�������������p�P�b�g����Ԃ��A���l�̂�N������ĂȂ��R�[�X�^�[�Ȃ�T�[�o�[�Ɠ���
+    	 // 乗っているのが自分だったらパケット送り返し、他人のや誰も乗ってないコースターならサーバーと同期
     	if(this.riddenByEntity instanceof EntityClientPlayerMP)
     	{
     		if(tlrail==null)
@@ -56,7 +56,7 @@ public class ERC_EntityCoasterMonodentate extends ERC_EntityCoaster{
     	{
     		Wrap_TileEntityRail rail = (Wrap_TileEntityRail)worldObj.getTileEntity(x,y,z);
     		if(rail == null)return;
-    		if(rail instanceof TileEntityRailBranch2)return; // ���򃌁[����̂Ƃ��͓�����������Ƃ�߂Ăق���
+    		if(rail instanceof TileEntityRailBranch2)return; // 分岐レール上のときは同期をちょっとやめてほしい
     		
     		this.setParamT(t);
     		this.Speed = speed;
